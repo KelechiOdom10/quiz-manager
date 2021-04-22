@@ -13,7 +13,7 @@ generator client {
 model Answer {
   id         Int      @id @default(autoincrement())
   answer     String
-  isCorrect  Boolean
+  isCorrect  Boolean  @default(false)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   question   Question @relation(fields: [questionId], references: [id])

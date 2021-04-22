@@ -2,7 +2,7 @@
 CREATE TABLE "Answer" (
     "id" SERIAL NOT NULL,
     "answer" TEXT NOT NULL,
-    "isCorrect" BOOLEAN NOT NULL,
+    "isCorrect" BOOLEAN NOT NULL DEFAULT false,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
     "questionId" INTEGER NOT NULL,
