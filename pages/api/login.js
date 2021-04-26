@@ -12,7 +12,8 @@ export default getHandler().post(async (req, res, next) => {
 
   const { errors } = await validation(loginSchema, req.body);
   if (errors) {
-    res.status(400).json({ status: "error", message: errors[0] });
+    const message = errors[0];
+    res.status(400).json({ status: "error", message });
     return;
   }
 
@@ -51,6 +52,7 @@ export default getHandler().post(async (req, res, next) => {
     res.status(200).json({
       status: "success",
       message: "Logged in successfully!",
+      data: { id: user.id, username: user.username, email: user.email },
     });
   } catch (error) {
     next(error);

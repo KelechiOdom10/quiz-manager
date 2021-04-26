@@ -18,7 +18,7 @@ export default getHandler()
 
       res.status(200).json({
         status: "success",
-        user: {
+        data: {
           id: user.id,
           username: user.username,
           email: user.email,

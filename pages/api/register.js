@@ -9,7 +9,8 @@ export default getHandler().post(async (req, res, next) => {
   //error validation
   const { errors } = await validation(registerSchema, req.body);
   if (errors) {
-    res.status(400).json({ status: "error", message: errors[0] });
+    const message = errors[0];
+    res.status(400).json({ status: "error", message });
     return;
   }
 
