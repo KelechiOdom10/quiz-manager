@@ -14,6 +14,7 @@ export default getHandler()
         select: {
           id: true,
           question: true,
+          user: { select: { username: true } },
           userId: true,
           answers: { select: { id: true, answer: true, isCorrect: true } },
         },
