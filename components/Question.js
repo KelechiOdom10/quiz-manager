@@ -9,14 +9,21 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   VStack,
-  HStack,
+  Avatar,
+  Flex,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  IconButton,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import Answer from "./Answer";
 import { useAuth } from "../contexts/auth";
 import MainButton from "./shared/Button";
-import MainIconButton from "./shared/IconButton";
 import { IoMdCreate, IoIosTrash } from "react-icons/io";
+import { BsThreeDots } from "react-icons/bs";
+import MainIcon from "./shared/Icon";
 
 const Question = ({ question, onDelete }) => {
   const { user } = useAuth();
@@ -27,8 +34,6 @@ const Question = ({ question, onDelete }) => {
   return (
     <>
       <VStack
-        _hover={{ transform: "scale(1.03)" }}
-        transition="transform .4s ease-in-out"
         mx="auto"
         shadow="lg"
         borderWidth="1px"
@@ -38,6 +43,31 @@ const Question = ({ question, onDelete }) => {
         w="100%"
         mb={8}
       >
+        <Flex px={4} py={3} w="100%" justify="space-between" align="center">
+          <Avatar name={question.user.username} bg="purple.500" color="white" />
+          {user && user.id === question.userId ? (
+            <Menu isLazy>
+              <MenuButton
+                as={IconButton}
+                aria-label="Options"
+                icon={<MainIcon as={BsThreeDots} />}
+                colorScheme="gray"
+                variant="ghost"
+              />
+              <MenuList>
+                <MenuItem icon={<MainIcon as={IoMdCreate} />}>Edit</MenuItem>
+                <MenuItem
+                  bg="red.300"
+                  icon={<MainIcon as={IoIosTrash} />}
+                  onClick={() => setIsOpen(true)}
+                >
+                  Delete
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          ) : null}
+        </Flex>
+
         <Heading textAlign="center" p={4} marginBottom="">
           {question.question}
         </Heading>
@@ -46,24 +76,6 @@ const Question = ({ question, onDelete }) => {
             <Answer key={answer.id} answer={answer} />
           ))}
         </SimpleGrid>
-
-        {user && user.id === question.userId ? (
-          <HStack px={4} py={3} w="100%" spacing={4}>
-            <MainIconButton
-              icon={IoMdCreate}
-              colorScheme="purple"
-              variant="ghost"
-              label="Edit Question"
-            />
-            <MainIconButton
-              icon={IoIosTrash}
-              colorScheme="red"
-              variant="ghost"
-              onClick={() => setIsOpen(true)}
-              label="Delete Question"
-            />
-          </HStack>
-        ) : null}
       </VStack>
       <AlertDialog
         isOpen={isOpen}
